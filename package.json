@@ -1,0 +1,34 @@
+{
+  "name": "bg3-book",
+  "displayName": "BG3 Book Text Cleaner",
+  "version": "0.0.1",
+  "publisher": "Yoonmoonsick",
+  "description": "Convert Baldur’s Gate 3 XML-style books into Markdown",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yoonmoonsick/bg3-book.git"
+  },
+  "engines": { "vscode": "^1.90.0" },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onCommand:bg3Book.cleanSelection"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "bg3Book.cleanSelection",
+        "title": "BG3: Clean Book Text"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.5.0",
+    "eslint": "^9.0.0"
+  }
+}
