@@ -9,3 +9,4 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 **/.vscode-test.*
+z__korean.loca.xml
