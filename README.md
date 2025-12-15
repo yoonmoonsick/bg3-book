@@ -9,7 +9,7 @@ A Visual Studio Code extension that converts Baldur’s Gate 3 XML-style book, l
 Baldur’s Gate 3 stores in-game books, letters, and scrolls in an XML/HTML-like text format.  
 This extension is designed to quickly transform those texts into a clean Markdown format suitable for documentation, modding notes, wikis, or personal archives.
 
-The transformation is applied **only to the currently selected text**.
+If nothing is selected, the command uses the **current line**. Otherwise it uses your selections.
 
 ---
 
@@ -27,10 +27,12 @@ When the command is executed, the extension performs the following operations on
 
 ## Usage
 
-1. Select a block of text in the editor
-2. Open the Command Palette (`Ctrl+Shift+P`)
-3. Run: **BG3: Clean Selected Text**
-4. The selected text is replaced with the transformed Markdown-friendly text
+1. Select a block of text (or leave the cursor on a line to target that line).
+2. Open the Command Palette (`Ctrl+Shift+P`).
+3. Run one of:
+   - **BG3: Clean Book Text** — replaces the selection(s) with cleaned text.
+   - **BG3: Copy Cleaned Book Text** — copies cleaned text to the clipboard (multiple selections are joined with `\n`).
+4. Paste or continue editing as needed.
 
 ---
 
@@ -61,7 +63,7 @@ Visual Studio Code 확장 프로그램입니다.
 발더스 게이트 3의 게임 데이터에는 책과 문서류가 XML 형태의 텍스트로 저장되어 있습니다.  
 이 확장 기능은 이러한 텍스트를 **Markdown에 적합한 깔끔한 형태로 빠르게 변환**하는 것을 목표로 합니다.
 
-변환은 **현재 선택된 텍스트 블록에만 적용**됩니다.
+선택 영역이 없으면 **현재 커서가 있는 라인**을 대상으로, 선택이 있으면 해당 선택 영역을 대상으로 변환합니다.
 
 ---
 
@@ -79,10 +81,12 @@ Visual Studio Code 확장 프로그램입니다.
 
 ## 사용 방법
 
-1. 에디터에서 변환할 텍스트를 블록 선택합니다
-2. 명령 팔레트 (`Ctrl+Shift+P`)를 엽니다
-3. **BG3: Clean Selected Text** 명령을 실행합니다
-4. 선택된 텍스트가 변환된 결과로 교체됩니다
+1. 에디터에서 변환할 텍스트를 블록 선택하거나, 선택 없이 커서를 라인에 둡니다.
+2. 명령 팔레트 (`Ctrl+Shift+P`)를 엽니다.
+3. 아래 명령 중 하나를 실행합니다.
+   - **BG3: Clean Book Text** — 선택 영역을 깨끗한 텍스트로 바로 교체.
+   - **BG3: Copy Cleaned Book Text** — 정리된 텍스트를 클립보드에 복사 (여러 선택 시 `\n`으로 연결).
+4. 필요에 따라 붙여넣거나 편집을 이어갑니다.
 
 ---
 
