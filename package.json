@@ -11,10 +11,15 @@
   "engines": { "vscode": "^1.90.0" },
   "main": "./out/extension.js",
   "activationEvents": [
+    "onCommand:bg3Book.copyCleanSelection",
     "onCommand:bg3Book.cleanSelection"
   ],
   "contributes": {
     "commands": [
+      {
+        "command": "bg3Book.copyCleanSelection",
+        "title": "BG3: Copy Cleaned Book Text"
+      },
       {
         "command": "bg3Book.cleanSelection",
         "title": "BG3: Clean Book Text"

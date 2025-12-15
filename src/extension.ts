@@ -19,23 +19,33 @@ function transform(input: string): string {
   return s;
 }
 
+function getEffectiveSelections(
+  editor: vscode.TextEditor
+): vscode.Selection[] {
+  const { selections, document } = editor;
+
+  if (selections.length === 1 && selections[0].isEmpty) {
+    const { active } = selections[0];
+    return [
+      new vscode.Selection(
+        active.with(undefined, 0),
+        active.with(undefined, document.lineAt(active.line).text.length)
+      ),
+    ];
+  }
+
+  return [...selections];
+}
 
 export function activate(context: vscode.ExtensionContext) {
-  const disposable = vscode.commands.registerCommand(
+  const cleanSelection = vscode.commands.registerCommand(
     "bg3Book.cleanSelection",
     async () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) return;
 
       const doc = editor.document;
-      const selections = editor.selections;
-
-      // 선택이 없으면 현재 커서 라인 전체 대상으로
-      const effectiveSelections =
-        selections.length === 1 && selections[0].isEmpty
-          ? [new vscode.Selection(selections[0].active.with(undefined, 0),
-                                 selections[0].active.with(undefined, doc.lineAt(selections[0].active.line).text.length))]
-          : selections;
+      const effectiveSelections = getEffectiveSelections(editor);
 
       await editor.edit((editBuilder) => {
         for (const sel of effectiveSelections) {
@@ -47,7 +57,26 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(disposable);
+  const copyCleanSelection = vscode.commands.registerCommand(
+    "bg3Book.copyCleanSelection",
+    async () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) return;
+
+      const doc = editor.document;
+      const effectiveSelections = getEffectiveSelections(editor);
+      const cleaned = effectiveSelections.map((sel) =>
+        transform(doc.getText(sel))
+      );
+
+      await vscode.env.clipboard.writeText(cleaned.join("\n"));
+      vscode.window.showInformationMessage(
+        "Cleaned text copied to clipboard."
+      );
+    }
+  );
+
+  context.subscriptions.push(cleanSelection, copyCleanSelection);
 }
 
 export function deactivate() {}
