@@ -19,3 +19,6 @@ Thumbs.db
 
 # VSIX packages
 *.vsix
+
+.gitignore
+z__korean.loca.xml
