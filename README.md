@@ -9,13 +9,13 @@ A Visual Studio Code extension that converts Baldur’s Gate 3 XML-style book, l
 Baldur’s Gate 3 stores in-game books, letters, and scrolls in an XML/HTML-like text format.  
 This extension is designed to quickly transform those texts into a clean Markdown format suitable for documentation, modding notes, wikis, or personal archives.
 
-If nothing is selected, the command uses the **current line**. Otherwise it uses your selections.
+If nothing is selected, the command uses the **current line**. If text is selected, it processes the entire lines that contain the selection.
 
 ---
 
 ## Features
 
-When the command is executed, the extension performs the following operations on the selected text:
+When the command is executed, the extension performs the following operations on the selected lines:
 
 - Removes all text between `<` and `>` (including the brackets)
 - Converts `&lt;br&gt;` into line breaks
@@ -27,7 +27,7 @@ When the command is executed, the extension performs the following operations on
 
 ## Usage
 
-1. Select a block of text (or leave the cursor on a line to target that line).
+1. Select a block of text (or leave the cursor on a line to target that line). The extension will process entire lines.
 2. Open the Command Palette (`Ctrl+Shift+P`).
 3. Run one of:
    - **BG3: Clean Book Text** — replaces the selection(s) with cleaned text.
@@ -63,13 +63,13 @@ Visual Studio Code 확장 프로그램입니다.
 발더스 게이트 3의 게임 데이터에는 책과 문서류가 XML 형태의 텍스트로 저장되어 있습니다.  
 이 확장 기능은 이러한 텍스트를 **Markdown에 적합한 깔끔한 형태로 빠르게 변환**하는 것을 목표로 합니다.
 
-선택 영역이 없으면 **현재 커서가 있는 라인**을 대상으로, 선택이 있으면 해당 선택 영역을 대상으로 변환합니다.
+선택 영역이 없으면 **현재 커서가 있는 라인**을 대상으로, 선택이 있으면 해당 선택이 포함된 전체 라인을 대상으로 변환합니다.
 
 ---
 
 ## 기능
 
-명령을 실행하면 선택된 텍스트에 대해 다음 작업을 수행합니다.
+명령을 실행하면 선택된 라인에 대해 다음 작업을 수행합니다.
 
 - `<` 와 `>`를 포함하여 `< ... >` 사이의 모든 텍스트 제거
 - `&lt;br&gt;`를 줄바꿈으로 변환
@@ -81,7 +81,7 @@ Visual Studio Code 확장 프로그램입니다.
 
 ## 사용 방법
 
-1. 에디터에서 변환할 텍스트를 블록 선택하거나, 선택 없이 커서를 라인에 둡니다.
+1. 에디터에서 변환할 텍스트를 블록 선택하거나, 선택 없이 커서를 라인에 둡니다. 확장 기능은 전체 라인을 처리합니다.
 2. 명령 팔레트 (`Ctrl+Shift+P`)를 엽니다.
 3. 아래 명령 중 하나를 실행합니다.
    - **BG3: Clean Book Text** — 선택 영역을 깨끗한 텍스트로 바로 교체.

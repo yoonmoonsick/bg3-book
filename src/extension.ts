@@ -24,17 +24,46 @@ function getEffectiveSelections(
 ): vscode.Selection[] {
   const { selections, document } = editor;
 
-  if (selections.length === 1 && selections[0].isEmpty) {
-    const { active } = selections[0];
-    return [
-      new vscode.Selection(
-        active.with(undefined, 0),
-        active.with(undefined, document.lineAt(active.line).text.length)
-      ),
-    ];
+  const effectiveSelections: vscode.Selection[] = [];
+
+  for (const selection of selections) {
+    if (selection.isEmpty) {
+      // 커서만 있을 때: 현재 행 전체
+      const { active } = selection;
+      effectiveSelections.push(
+        new vscode.Selection(
+          active.with(undefined, 0),
+          active.with(undefined, document.lineAt(active.line).text.length)
+        )
+      );
+    } else {
+      // 선택이 있을 때
+      const startLine = selection.start.line;
+      const endLine = selection.end.line;
+
+      if (startLine === endLine) {
+        // 블록이 한 행 안에 있을 때: 그 행 전체
+        effectiveSelections.push(
+          new vscode.Selection(
+            new vscode.Position(startLine, 0),
+            new vscode.Position(startLine, document.lineAt(startLine).text.length)
+          )
+        );
+      } else {
+        // 블록이 여러 행에 걸쳐 있을 때: 각 행 전체
+        for (let line = startLine; line <= endLine; line++) {
+          effectiveSelections.push(
+            new vscode.Selection(
+              new vscode.Position(line, 0),
+              new vscode.Position(line, document.lineAt(line).text.length)
+            )
+          );
+        }
+      }
+    }
   }
 
-  return [...selections];
+  return effectiveSelections;
 }
 
 export function activate(context: vscode.ExtensionContext) {

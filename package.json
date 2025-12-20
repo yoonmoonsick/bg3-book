@@ -1,7 +1,7 @@
 {
   "name": "bg3-book",
   "displayName": "BG3 Book Text Cleaner",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "publisher": "Yoonmoonsick",
   "description": "Convert Baldur’s Gate 3 XML-style books into Markdown",
   "repository": {
