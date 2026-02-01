@@ -1,34 +1,24 @@
 import * as vscode from "vscode";
 
 function transform(input: string): string {
-  // 2) <과 >를 포함하여 <...> 제거
+  // 기존의 transform 함수 내용 유지
   let s = input.replace(/<[^>]*>/g, "");
-
-  // 3) &lt;br&gt; 를 개행으로
   s = s.replace(/&lt;br\s*\/?&gt;/gi, "\n");
-
-  // 4) &lt;i&gt; / &lt;/i&gt; 를 * 로
   s = s.replace(/&lt;\/?i&gt;/gi, "*");
-
-  // 5) &lt;b&gt; / &lt;/b&gt; 를 ** 로
   s = s.replace(/&lt;\/?b&gt;/gi, "**");
-
-  // 6) 탭 문자 제거
   s = s.replace(/\t+/g, "");
-
   return s;
 }
 
 function getEffectiveSelections(
   editor: vscode.TextEditor
 ): vscode.Selection[] {
+  // 기존의 getEffectiveSelections 함수 내용 유지
   const { selections, document } = editor;
-
   const effectiveSelections: vscode.Selection[] = [];
-
+  
   for (const selection of selections) {
     if (selection.isEmpty) {
-      // 커서만 있을 때: 현재 행 전체
       const { active } = selection;
       effectiveSelections.push(
         new vscode.Selection(
@@ -37,12 +27,10 @@ function getEffectiveSelections(
         )
       );
     } else {
-      // 선택이 있을 때
       const startLine = selection.start.line;
       const endLine = selection.end.line;
 
       if (startLine === endLine) {
-        // 블록이 한 행 안에 있을 때: 그 행 전체
         effectiveSelections.push(
           new vscode.Selection(
             new vscode.Position(startLine, 0),
@@ -50,7 +38,6 @@ function getEffectiveSelections(
           )
         );
       } else {
-        // 블록이 여러 행에 걸쳐 있을 때: 각 행 전체
         for (let line = startLine; line <= endLine; line++) {
           effectiveSelections.push(
             new vscode.Selection(
@@ -64,6 +51,11 @@ function getEffectiveSelections(
   }
 
   return effectiveSelections;
+}
+
+// 새로 추가된 showAlert 함수
+function showAlert(message: string) {
+  return vscode.window.showInformationMessage(message);
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -83,6 +75,9 @@ export function activate(context: vscode.ExtensionContext) {
           editBuilder.replace(sel, changed);
         }
       });
+
+      // 작업 완료 후 알림 표시
+      showAlert("텍스트 정리가 완료되었습니다.");
     }
   );
 
@@ -99,9 +94,9 @@ export function activate(context: vscode.ExtensionContext) {
       );
 
       await vscode.env.clipboard.writeText(cleaned.join("\n"));
-      vscode.window.showInformationMessage(
-        "Cleaned text copied to clipboard."
-      );
+      
+      // 복사 완료 후 알림 표시
+      showAlert("정리된 텍스트가 클립보드에 복사되었습니다.");
     }
   );
 
